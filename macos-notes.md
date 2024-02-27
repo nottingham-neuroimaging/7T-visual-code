@@ -72,4 +72,6 @@ arch -x84_64 /usr/local/homebrew/bin/octave
 
 ## Notes / video log
 
+- [short recording of testing](https://www.youtube.com/watch?v=4B3s1_dK_DA) - youtube clip of looking at demos on an M1 mac / laptop
+
 <object width="425" height="344"><param name="movie" value="https://www.youtube.com/v/4B3s1_dK_DA&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="https://www.youtube.com/v/4B3s1_dK_DA&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>
