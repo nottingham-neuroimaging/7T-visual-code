@@ -21,3 +21,9 @@ matlab -nodesktop
 cd ~/projects/7T-visual-code/face_localiser/
 FFAlocaliser('debug=1')  % for small debug display
 ```
+
+## Setting up VPixx / debugging code on `macOS`
+
+To get some code running under `macOS` for developing away from console room requires dealing with `Psychtoolbox`/`macOS` madness.
+
+- [Some setup notes](macos-notes.md) to make reproducing this easier.
