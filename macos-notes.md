@@ -69,8 +69,13 @@ On my machine, there are then two `octave` installs. One for each architecture. 
 ```bash
 arch -x84_64 /usr/local/homebrew/bin/octave
 ```
+### For multimedia / video
+
+Need to install version of `GStreamer` (https://gstreamer.freedesktop.org/download//#macos). Apparently `arch` is ok to be `x86_64?` (will this play nicely with intel code running octave?)
+
 
 ## Notes / video log
+### Basic install
 
 - [short recording of testing](https://www.youtube.com/watch?v=4B3s1_dK_DA) - youtube clip of looking at demos on an M1 mac / laptop
 
