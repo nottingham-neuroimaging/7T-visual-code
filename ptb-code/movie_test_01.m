@@ -7,13 +7,21 @@
 %
 % octave:54> system('arch')
 % i386
+% 
+% matlab>>!arch
+% i386
 
 % local movie stimuli from a Vogels lab study
-% todo - add our own / centrally available resources?
-dname = '/Users/lpzds1/data/vogels-face-patch-data/Stimuli/dynamic_bodies/'
+% todo - add our own / centrally available resources?% 
+% dname = '/Users/lpzds1/data/vogels-face-patch-data/Stimuli/dynamic_bodies/'
+dname = '/Users/lpzds1/data/rich_movies/'
+
+% if somewhere else, use local folder...
+if ~exist(dname,'dir'), dname = '.'; end
+
 cwd = pwd()
 
-files = dir([dname filesep '*.mp4'])
+files = dir([dname filesep '*.avi'])
 
 nMovies = numel(files)
 iMovie = randi(nMovies);
