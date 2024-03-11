@@ -9,6 +9,23 @@ visual stim code for the 7T, laptop, VPixx, etc.
 
 NB! `scene_localiser()` depends on local text file to stim order, etc. double check timings, how to input...
 
+### 7T console room  settings + notes
+
+```text
+ip address: 10.156.192.150
+username: vpixx
+/home/vpixx/projects/7T-visual-code/ptb-code
+# psychtoolbox is stored at
+/usr/share/octave/site/m/psychtoolbox-3/
+```
+
+- todo: `VPixx` switch ON for projector... documentation
+- todo: BNC connector? for getting TTL pulse from scanner
+- todo: ...
+
+
+
+
 ### DS laptop
 
 ```bash

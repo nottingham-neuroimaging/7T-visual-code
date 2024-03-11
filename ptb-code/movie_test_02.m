@@ -81,7 +81,7 @@ while (mydisplay.abortit < 2)
     fprintf('Movie: %s  : %f seconds duration, %f fps, w x h = %i x %i...\n', moviename, movieduration, fps, imgw, imgh);
     if imgw > mydisplay.w || imgh > mydisplay.h
         % Video frames too big to fit into window, so define size to be window size:
-        dstRect = CenterRect((w / imgw) * [0, 0, imgw, imgh], Screen('Rect', mydisplay.win));
+        dstRect = CenterRect((mydisplay.w / imgw) * [0, 0, imgw, imgh], Screen('Rect', mydisplay.win));
     else
         dstRect = [];
     end
