@@ -1,0 +1,3 @@
+[submodule "NORDIC_Raw"]
+	path = NORDIC_Raw
+	url = https://github.com/SteenMoeller/NORDIC_Raw.git

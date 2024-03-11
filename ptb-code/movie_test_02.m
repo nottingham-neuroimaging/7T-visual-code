@@ -11,7 +11,9 @@ function movie_test_02(moviename, backgroundMaskOut, tolerance )
 Screen('Preference', 'SkipSyncTests', 1)
 
 if ieNotDefined('moviename')
-    moviename = '/Users/lpzds1/data/rich_movies/synchronous.avi';
+    
+    moviename = [pwd() filesep() 'out.mp4'];
+
 end
 
 % make sure error handling is ok and we don't get stuck behind a black
@@ -21,14 +23,17 @@ cleanup = onCleanup(@myCleanup);
 
 % provide details for experiment / display in general
 % TODO .. break out video / stim stuff.
-mydisplay.backgroundMaskOut = [ 17 17 17]./256; % try black? could green screen as well!
+mydisplay.backgroundMaskOut = [ 0 0 0]./256; % try black? could green screen as well!
 mydisplay.tolerance = 0.02; % play with this to just catch bg
-mydisplay.rate = 1.0;
+mydisplay.rate = 1.5;
+
+mydisplay.screenNums = Screen('Screens');
+mydisplay.smallerWindow = 1; % draw in smaller window 1/4 of the total screen?
+
 
 mydisplay.pixelFormat = []; % default
 mydisplay.maxThreads = []; % default
 
-mydisplay.smallerWindow = 1; % draw in smaller window 1/4 of the total screen?
 
 mydisplay.bg = [1 1 1]*0.5;
 mydisplay.rect = [0 0 800, 600]+100;
@@ -71,7 +76,7 @@ while (mydisplay.abortit < 2)
 
     % Open movie file and retrieve basic info about movie:
     %[movie, movieduration, fps, imgw, imgh, ~, ~, hdrStaticMetaData] = Screen('OpenMovie', mydisplay.win, moviename, [], preloadsecs, [], mydisplay.pixelFormat, mydisplay.maxThreads, []);
-    [movie, movieduration, fps, imgw, imgh, ~, ~, hdrStaticMetaData] = Screen('OpenMovie', mydisplay.win, moviename, [], preloadsecs);
+    [movie, movieduration, fps, imgw, imgh, ~, ~, hdrStaticMetaData] = Screen('OpenMovie', mydisplay.win, moviename, [], preloadsecs, [], mydisplay.pixelFormat, mydisplay.maxThreads, []);
     
     fprintf('Movie: %s  : %f seconds duration, %f fps, w x h = %i x %i...\n', moviename, movieduration, fps, imgw, imgh);
     if imgw > mydisplay.w || imgh > mydisplay.h
