@@ -24,6 +24,11 @@ username: vpixx
 - todo: ...
 
 
+### Documentation from `VPixx` website 
+
+Trying out a couple of provided demos to test digital IO and also ProPIXX display capabilities:
+
+<https://www.vpixx.com/manuals/psychtoolbox/html/intro.html>
 
 
 ### DS laptop
