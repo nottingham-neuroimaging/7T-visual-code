@@ -11,7 +11,6 @@ mydisplay.tolerance = 0.02; % play with this to just catch bg
 mydisplay.rate = 1.5;
 
 mydisplay.screenNums = Screen('Screens');
-mydisplay.smallerWindow = 1; % draw in smaller window 1/4 of the total screen?
 
 mydisplay.pixelFormat = []; % default
 mydisplay.maxThreads = []; % default
@@ -20,11 +19,13 @@ mydisplay.bg = [1 1 1]*0.5;
 mydisplay.rect = [0 0 800, 600]+100;
 
 
-if ok
-    myscreen.screenID = 2;
+if ok 
+    myscreen.screen = 2;
+    mydisplay.smallerWindow = 0; 
 else % debug mode
     % likely to be on a mac, so also skip screen tests
-    myscreen.screenID = 0;
+    myscreen.screen = 0;
+    mydisplay.smallerWindow = 1; % draw in smaller window 1/4 of the total screen?
     Screen('Preference', 'SkipSyncTests', 1)
 end
 
@@ -45,11 +46,6 @@ mydisplay.abortit = 0;
 cleanup = onCleanup(@myCleanup);
 
 
-%Open a display on the Propixx
-AssertOpenGL;
-KbName('UnifyKeyNames')
-Screen('Preference', 'SkipSyncTests', 1);
-% [windowPtr,rect] = PsychImaging('OpenWindow', myscreen.screenID, 0);
 
 %Set up some stimulus characteristics
 dotRadius = 30;
@@ -111,6 +107,8 @@ end
 function keys = setupKeys()
 % set up keycodes / return in struct
 
+    KbName('UnifyKeyNames');
+    
     keys.space = KbName('SPACE');
     keys.esc=KbName('ESCAPE');
     keys.right=KbName('RightArrow');
@@ -137,6 +135,7 @@ function mydisplay = setupExperiment(mydisplay)
     if mydisplay.smallerWindow
         mydisplay.win = PsychImaging('OpenWindow', mydisplay.screen, mydisplay.bg, mydisplay.rect);
     else
+        %Open a display on the Propixx
         mydisplay.win = PsychImaging('OpenWindow', mydisplay.screen, mydisplay.bg);
     end
 
