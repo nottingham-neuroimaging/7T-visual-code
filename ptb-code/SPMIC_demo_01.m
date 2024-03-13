@@ -3,65 +3,23 @@ function SPMIC_demo_01
 %
 % ds 2024-03-12 wrote it based on docs & demo
 
-ok = initPIXX(); % can check
+% check for PIXX presence
+mydisplay.isPIXX = initPIXX(); % can check / false if not connected
 
-% movie stuff...
-mydisplay.backgroundMaskOut = [ 0 0 0]./256; % try black? could green screen as well!
-mydisplay.tolerance = 0.02; % play with this to just catch bg
-mydisplay.rate = 1.5;
-
-mydisplay.screenNums = Screen('Screens');
-
-mydisplay.pixelFormat = []; % default
-mydisplay.maxThreads = []; % default
-
-mydisplay.bg = [1 1 1]*0.5;
-mydisplay.rect = [0 0 800, 600]+100;
-
-
-if ok 
-    myscreen.screen = 2;
-    mydisplay.smallerWindow = 0; 
-else % debug mode
-    % likely to be on a mac, so also skip screen tests
-    myscreen.screen = 0;
-    mydisplay.smallerWindow = 1; % draw in smaller window 1/4 of the total screen?
-    Screen('Preference', 'SkipSyncTests', 1)
-end
-
+% set up defaults for display etc.
+mydisplay = initDisplay(mydisplay);
 
 %% Setup key mapping:
-keys = setupKeys()
-
-mydisplay = setupExperiment(mydisplay);
-% mydisplay.screen .win .w .h .shader
-
+keys = initKeys();
        
-%% Initial display and sync to timestamp:
-Screen('Flip', mydisplay.win);
-mydisplay.abortit = 0;
-
-
-
+%% setup a cleanup function that gets called if problems
 cleanup = onCleanup(@myCleanup);
 
+s = setupStimulus();
 
-
-%Set up some stimulus characteristics
-dotRadius = 30;
-
-%Create some positions based on the regular display
-center = [mydisplay.rect(3), mydisplay.rect(4)] - ...
-    [mydisplay.rect(1), mydisplay.rect(2)]./2;
-radius = 200;
-        
-%Start displaying dots
-dispAngle = 0;
-dispAngleDiff = 0.005; % radians
-colour = [1, 1, 0]; % yellow?!
 while (mydisplay.abortit < 2) 
 
-    % Check for abortion:
+    % Check for abort / keypress:
     mydisplay.abortit = 0;
     [keyIsDown, ~, keyCode] = KbCheck(-1);
     if (keyIsDown == 1 && keyCode(keys.esc))
@@ -70,26 +28,23 @@ while (mydisplay.abortit < 2)
         break;
     end
 
-    dispAngle = mod(dispAngle + dispAngleDiff, 2*pi())
+    % change display angle
+    s.dispAngle = mod(s.dispAngle + s.dispAngleDiff, 2*pi());
+    
+    % compute new pos and display
+    s = drawDotStim(mydisplay, s);
 
-    x = center(1) + radius * sin(dispAngle);
-    y = center(2) + radius * cos(dispAngle);
+    % draw fixation point
+    drawFixation(mydisplay);
 
-    Screen('FillOval', mydisplay.win, colour, ...
-        [x-dotRadius, y-dotRadius, x+dotRadius, y+dotRadius]);
-
-    Screen('FillRect', mydisplay.win, [0.1, 0.1, 0.1], ...
-         [-10 -10 +10 +10]+[center  center]);
-
-    %Flip
+    % Flip screen
     Screen('Flip',mydisplay.win);
 
 end
         
 Screen('Closeall');
 
-
-ok = cleanupPIXX();
+mydisplay.closedDownOK = cleanupPIXX();
 
 
 end
@@ -104,47 +59,39 @@ function myCleanup()
 
 end
 
-function keys = setupKeys()
-% set up keycodes / return in struct
+function drawFixation(mydisplay)
+% draw a fixaton - make more generic later
 
-    KbName('UnifyKeyNames');
-    
-    keys.space = KbName('SPACE');
-    keys.esc=KbName('ESCAPE');
-    keys.right=KbName('RightArrow');
-    keys.left=KbName('LeftArrow');
-    keys.up=KbName('UpArrow');
-    keys.down=KbName('DownArrow');
-    keys.shift=KbName('RightShift');
-    keys.colorPicker=KbName('c');
-    
+Screen('FillRect', mydisplay.win, [0.1, 0.1, 0.1], ...
+         CenterRectOnPoint([-10 -10 +10 +10], ...
+            mydisplay.xCenter, mydisplay.yCenter));
+
 end
     
-    
-function mydisplay = setupExperiment(mydisplay)
-% setup and open window
+function s = setupStimulus()
+% set up dot stimulus as simple example
 
-    AssertOpenGL();
-    %% Initialize with unified keynames and normalized colorspace:
-    PsychDefaultSetup(2);
+%% Set up some stimulus characteristics
+s.dotRadius = 30;
 
-    % Open onscreen window with gray background:
-    mydisplay.screen = max(Screen('Screens'));
-    PsychImaging('PrepareConfiguration');
-    
-    if mydisplay.smallerWindow
-        mydisplay.win = PsychImaging('OpenWindow', mydisplay.screen, mydisplay.bg, mydisplay.rect);
-    else
-        %Open a display on the Propixx
-        mydisplay.win = PsychImaging('OpenWindow', mydisplay.screen, mydisplay.bg);
-    end
+%% Create some positions 
+s.radius = 200;
+        
+%% set up angular displacement
+s.dispAngle = 0;
+s.dispAngleDiff = 0.005; % radians
+s.colour = [1, 1, 0]; % yellow?!
 
-    [mydisplay.w, mydisplay.h] = Screen('WindowSize', mydisplay.win);
-    Screen('Blendfunction', mydisplay.win, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    HideCursor(mydisplay.win);
+end
 
-    %% set up background filtering
-    mydisplay.shader = CreateSinglePassImageProcessingShader(mydisplay.win, 'BackgroundMaskOut', mydisplay.backgroundMaskOut, mydisplay.tolerance);
+function s = drawDotStim(mydisplay, s)
+% drawDotStim - draw stimulus logic
 
-    % returns mydisplay with various fields.
+s.x = mydisplay.xCenter + s.radius * sin(s.dispAngle);
+s.y = mydisplay.yCenter + s.radius * cos(s.dispAngle);
+
+Screen('FillOval', mydisplay.win, s.colour, ...
+        CenterRectOnPoint([-s.dotRadius, -s.dotRadius, +s.dotRadius, +s.dotRadius], ...
+                          s.x, s.y));
+
 end
