@@ -12,7 +12,7 @@ Screen('Preference', 'SkipSyncTests', 1)
 
 if ieNotDefined('moviename')
     
-    moviename = [pwd() filesep() 'out.mp4'];
+    moviename = [pwd() filesep() 'assets' filesep() 'surprise.mp4'];
 
 end
 

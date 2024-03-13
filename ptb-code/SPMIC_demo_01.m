@@ -1,6 +1,11 @@
 function SPMIC_demo_01
 % SPMIC_demo_01 - initial stimulus test / getting simple images up
 %
+%  purpose: minimal working demo (maybe starting point for future code)
+%           of how to set up VPixx code.
+%
+%  **Very much work in progress as of March 2024**
+%
 % ds 2024-03-12 wrote it based on docs & demo
 
 % check for PIXX presence
