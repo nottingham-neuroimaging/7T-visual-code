@@ -1,4 +1,6 @@
-function PPxDraw480HzDots
+function PROPixxDemo1
+
+%function PPxDraw480HzDots
     %This function draws a series of dots around the center of the
     %display at 480 Hz. 
     

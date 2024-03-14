@@ -28,7 +28,7 @@ mydisplay.tolerance = 0.02; % play with this to just catch bg
 mydisplay.rate = 1.5;
 
 mydisplay.screenNums = Screen('Screens');
-mydisplay.smallerWindow = 1; % draw in smaller window 1/4 of the total screen?
+mydisplay.smallerWindow = 0; % draw in smaller window 1/4 of the total screen?
 
 
 mydisplay.pixelFormat = []; % default

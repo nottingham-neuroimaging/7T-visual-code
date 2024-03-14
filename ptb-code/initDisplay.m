@@ -27,7 +27,7 @@ mydisplay.rect = [0 0 800, 600]+100;
 
 
 if mydisplay.isPIXX 
-    mydisplay.screen = 2;
+    mydisplay.screen = 0;
     mydisplay.smallerWindow = 0; 
 else 
     % either VPixx not present or some other issue
