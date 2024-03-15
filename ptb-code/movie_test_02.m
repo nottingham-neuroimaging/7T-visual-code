@@ -10,10 +10,8 @@ function movie_test_02(moviename, backgroundMaskOut, tolerance )
 % force... to work on macos
 Screen('Preference', 'SkipSyncTests', 1)
 
-if ieNotDefined('moviename')
-    
+if ieNotDefined('moviename')  
     moviename = [pwd() filesep() 'assets' filesep() 'surprise.mp4'];
-
 end
 
 % make sure error handling is ok and we don't get stuck behind a black
@@ -28,7 +26,7 @@ mydisplay.tolerance = 0.02; % play with this to just catch bg
 mydisplay.rate = 1.5;
 
 mydisplay.screenNums = Screen('Screens');
-mydisplay.smallerWindow = 0; % draw in smaller window 1/4 of the total screen?
+mydisplay.smallerWindow = 1; % draw in smaller window 1/4 of the total screen?
 
 
 mydisplay.pixelFormat = []; % default
@@ -36,7 +34,7 @@ mydisplay.maxThreads = []; % default
 
 
 mydisplay.bg = [1 1 1]*0.5;
-mydisplay.rect = [0 0 800, 600]+100;
+mydisplay.rect = [0 0 500, 500*9/16]+100;
 
 % History:
 % 06/17/13  mk  Add new (c)ool movies, remove Apple PRopaganda videos, cleanup.
