@@ -22,20 +22,15 @@ mydisplay.screenNums = Screen('Screens');
 mydisplay.pixelFormat = []; % default
 mydisplay.maxThreads = []; % default
 
-mydisplay.bg = [1 1 1]*0.5;
-mydisplay.rect = [0 0 800, 600]+100;
-
-
-if mydisplay.isPIXX 
-    mydisplay.screen = 0;
-    mydisplay.smallerWindow = 0; 
-else 
-    % either VPixx not present or some other issue
-    % likely to be on a mac, so also skip screen tests
-    mydisplay.screen = 0;
-    mydisplay.smallerWindow = 1; % draw in smaller window 1/4 of the total screen?
-    Screen('Preference', 'SkipSyncTests', 1)
+if ~isfield(mydisplay,'bg'), mydisplay.bg = [1 1 1]*0.5; end
+if ~isfield(mydisplay,'smallerWindow'), mydisplay.smallerWindow = false; end
+if ~isfield(mydisplay,'screen'), mydisplay.screen = 0; end
+if ~isfield(mydisplay,'rect'), mydisplay.rect = [0 0 960 540]/2+100; end
+if ~isfield(mydisplay,'smallerWindow') 
+        mydisplay.smallerWindow = true; % draw in smaller window 1/4 of the total screen?
+        mydisplay.rect = [0 0 960 540]/2+100;
 end
+if ismac(), Screen('Preference', 'SkipSyncTests', 1); end
 
 %% Make sure things are going to be possible!
 AssertOpenGL();
@@ -66,8 +61,6 @@ end
 Screen('Blendfunction', mydisplay.win, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 HideCursor(mydisplay.win);
 
-%% set up background filtering
-mydisplay.shader = CreateSinglePassImageProcessingShader(mydisplay.win, 'BackgroundMaskOut', mydisplay.backgroundMaskOut, mydisplay.tolerance);
 
 %% Initial display and sync to timestamp:
 Screen('Flip', mydisplay.win);
