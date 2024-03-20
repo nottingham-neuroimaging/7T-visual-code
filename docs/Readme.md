@@ -15,7 +15,7 @@ This page provides information and some visual stimulus code for the 7T, notes f
 - [ ] test 45º mirror for projecting along line of bore + screen material
 - [ ] document minimal test code + examples
 - [ ] document (SOP) for switching on/off projector, how to bring your own code, etc.
-- [ ] provide guidance to those wanting to write code away from console room (eg coding / debugging on MacOS/Apple hardware requires some additional hoop-jumping)
+- [ ] provide guidance to those wanting to write code away from console room (eg [coding / debugging on MacOS/Apple hardware](./macos-notes.md) requires some additional hoop-jumping)
  
 
 
