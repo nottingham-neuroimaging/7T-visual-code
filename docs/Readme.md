@@ -3,8 +3,7 @@
 This page provides information and some visual stimulus code for the 7T, notes for running frm the  `VPixx` system on the dedicated machine with `octave`+`Psychtoolbox` under the `ubuntu` install. 
 
 <center>
-<img src="./assets/7t-movie-stim.gif" width="80%"/>
-
+<img src="./assets/7t-movie-stim.gif" width="100%"/>
 <caption>
 Coding on macOS (`x86_64` version of `octave`)
 </caption>
