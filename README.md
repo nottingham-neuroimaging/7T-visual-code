@@ -2,6 +2,11 @@
 
 visual stim code for the 7T, laptop, VPixx, etc.
 
+## General (shareable) material
+
+Go to the [docs folder](./docs/) which is also published to the github pages.
+
+
 ## Potential code snippets
 
 - `face_localiser/FFAlocaliser()` (needs `mglEditScreenParams()`)
@@ -48,4 +53,4 @@ FFAlocaliser('debug=1')  % for small debug display
 
 To get some code running under `macOS` for developing away from console room requires dealing with `Psychtoolbox`/`macOS` madness.
 
-- [Some setup notes](macos-notes.md) to make reproducing this easier.
+- [Some setup notes](./docs/macos-notes.md) to make reproducing this easier.
