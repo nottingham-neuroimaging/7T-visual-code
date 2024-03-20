@@ -46,11 +46,22 @@ tStart = KbWait();
 
 % N = updateNoiesTextures;
 
-% display a movie block
-[mydisplay, M] = displayBlock(mydisplay, M, 12);
+mydisplay.iBlock = 0;
+mydisplay.nBlocks = 12;
 
-[mydisplay] = displayBlank(mydisplay, 12); % a blank block
-% display a static block
+while mydisplay.iBlock < mydisplay.nBlocks && !mydisplay.abortit < 2
+
+  mydisplay.imageTexture = M.imageTexture;
+
+  % display a movie block
+  [mydisplay, M] = displayBlock(mydisplay, M, 6);
+
+  [mydisplay] = displayBlank(mydisplay, 5); % a blank block
+  % display a static block
+
+  fprintf('the number of blocks that have been run %d (of %d)\n', mydisplay.iBlock, mydisplay.nBlocks);
+
+end
 
 Screen('Flip', mydisplay.win);
 KbReleaseWait;
@@ -120,30 +131,36 @@ Screen('FillOval', mydisplay.win, s.colour, ...
 end
 
 function N = makeNoiseTextures(mydisplay, N_textures)
-
 % make some static noise for N_textures frames...
 %
-%
+% N_textures determines how many different samples
 
-% N_textures = 10; % magic number
-noisePattern = rand(mydisplay.w*2, mydisplay.h*2, N_textures);
-%imNoise(:,:,1) = noisePattern;
-%imNoise(:,:,:,2) = noisePattern;
-%imNoise(:,:,:,3) = noisePattern;
-imNoise = repelem(noisePattern,1,1,1,3);
+h = round(mydisplay.h/8);
+w = round(mydisplay.w/8);
+
+noisePattern = rand(h,w , N_textures);
+
+f_gauss = fspecial("gaussian", 9, 2);
+
+blurredPattern = zeros(size(noisePattern));
+for iTex = 1:N_textures
+  blurredPattern(:,:,iTex) = imfilter(noisePattern(:,:,iTex), f_gauss, "symmetric");
+end
+
+imNoise = repelem(blurredPattern,1,1,1,3);
+% imNoise = repelem(noisePattern,1,1,1,3);
 
 N.n = N_textures;
 N.current = 1;
 N.imNoise = permute(imNoise, [1,2,4,3]);
 
-%% TODO -- for now, only pick one ... but reallyLOOP!
-N.imageTexture = Screen('MakeTexture', mydisplay.win, N.imNoise(:,:,:,1));
+%% TODO -- for now, only pick one ... but really LOOP!
+N.imageTexture = Screen('MakeTexture', mydisplay.win, N.imNoise(:,:,:,N.current));
 
 
 end
 
 function [mydisplay, M] = setupMovieStimulus(mydisplay, M)
-
 % setupMovieStimulus - set up and return movie stimulus
 %
 % either
@@ -213,7 +230,7 @@ function [mydisplay, allM] = loadAllMovies(mydisplay)
 %
 % returns a struct with movie information (can pick 1..N)
 inM = struct('moviename',{}, 'backgroundMaskOut', {}, 'tolerance', {}, 'scaled', {})
-inM(1).moviename = [pwd(), '/assets/0_up.avi'];
+inM(1).moviename = [pwd(), '/assets/face-movies/0_up.avi'];
 inM(1).backgroundMaskOut = [17,17,17]/256;
 inM(1).tolerance = 0.02;
 inM(1).scaled = true;
@@ -221,9 +238,9 @@ inM(1).scaleFac = 0.75;
 
 
 inM(2) = inM(1);
-inM(2).moviename = [pwd(), '/assets/90_up.avi'];
+inM(2).moviename = [pwd(), '/assets/face-movies/90_up.avi'];
 inM(3) = inM(1);
-inM(3).moviename = [pwd(), '/assets/180_up.avi'];
+inM(3).moviename = [pwd(), '/assets/face-movies/180_up.avi'];
 
 
 % loop over
@@ -286,7 +303,10 @@ while 1 && (GetSecs()-t1) < M.duration
         if M.tex == 0, WaitSecs('YieldSecs', 0.005); continue; end
 
         % Draw the new texture immediately to screen:
-        Screen('DrawTexture', mydisplay.win, M.imageTexture, [], [], 0);
+
+        % Screen('DrawTexture', mydisplay.win, M.imageTexture, [], [], 0);
+        Screen('DrawTexture', mydisplay.win, M.imageTexture, [], mydisplay.winrect, 0);
+
         Screen('DrawTexture', mydisplay.win, M.tex, [], M.dstRect, [], [], [], [], mydisplay.shader);
 
         % draw fixation point
@@ -310,4 +330,47 @@ end
 
 telapsed = GetSecs - t1;
 fprintf('Elapsed time %f seconds, for %i frames. Average framerate %f fps.\n', telapsed, i, i / telapsed);
+
+% increase block count!
+mydisplay.iBlock = mydisplay.iBlock + 1;
+
+end
+
+function [mydisplay, M] = displayBlank(mydisplay, duration)
+% displayBlank - show a blank screen w/ fixation for duration
+%
+%
+
+% Get timestamp
+t1 = GetSecs();
+
+while 1 && (GetSecs()-t1) < duration
+
+    % Check for abortion:
+    mydisplay.abortit = 0;
+    [keyIsDown, ~, keyCode] = KbCheck(-1);
+    if (keyIsDown == 1 && keyCode(mydisplay.keys.esc))
+        % Set the abort-demo flag.
+        mydisplay.abortit = 2;
+        break;
+    end
+
+
+    % Color the screen bg color
+    if isfield(mydisplay, 'imageTexture')
+      Screen('DrawTexture', mydisplay.win, mydisplay.imageTexture, [], mydisplay.winrect, 0);
+    else
+      Screen('FillRect', mydisplay.win, mydisplay.bg);
+    end
+
+    drawFixation(mydisplay);
+
+    % Flip to the screen
+    Screen('Flip', mydisplay.win);
+
+end
+
+% increase block count!
+mydisplay.iBlock = mydisplay.iBlock + 1;
+
 end
