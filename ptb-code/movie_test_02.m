@@ -3,15 +3,15 @@ function movie_test_02(moviename, backgroundMaskOut, tolerance )
 % task
 %
 %
-%  see also: PlayMovieDemo, PsychDemos 
+%  see also: PlayMovieDemo, PsychDemos
 %
 % ds 2024-02-29 - started
 
 % force... to work on macos
 Screen('Preference', 'SkipSyncTests', 1)
 
-if ieNotDefined('moviename')  
-    moviename = [pwd() filesep() 'assets' filesep() 'surprise.mp4'];
+if ieNotDefined('moviename')
+    moviename = [pwd() filesep() 'assets/face-movies' filesep() 'surprise.mp4'];
 end
 
 % make sure error handling is ok and we don't get stuck behind a black
@@ -42,7 +42,7 @@ mydisplay.rect = [0 0 500, 500*9/16]+100;
 
 
 
- 
+
 %% Initialize with unified keynames and normalized colorspace:
 PsychDefaultSetup(2);
 
@@ -52,7 +52,7 @@ keys = setupKeys()
 mydisplay = setupExperiment(mydisplay);
 % mydisplay.screen .win .w .h .shader
 
-       
+
 %% Initial display and sync to timestamp:
 Screen('Flip', mydisplay.win);
 mydisplay.abortit = 0;
@@ -75,7 +75,7 @@ while (mydisplay.abortit < 2)
     % Open movie file and retrieve basic info about movie:
     %[movie, movieduration, fps, imgw, imgh, ~, ~, hdrStaticMetaData] = Screen('OpenMovie', mydisplay.win, moviename, [], preloadsecs, [], mydisplay.pixelFormat, mydisplay.maxThreads, []);
     [movie, movieduration, fps, imgw, imgh, ~, ~, hdrStaticMetaData] = Screen('OpenMovie', mydisplay.win, moviename, [], preloadsecs, [], mydisplay.pixelFormat, mydisplay.maxThreads, []);
-    
+
     fprintf('Movie: %s  : %f seconds duration, %f fps, w x h = %i x %i...\n', moviename, movieduration, fps, imgw, imgh);
     if imgw > mydisplay.w || imgh > mydisplay.h
         % Video frames too big to fit into window, so define size to be window size:
@@ -97,9 +97,9 @@ while (mydisplay.abortit < 2)
     Screen('PlayMovie', movie, mydisplay.rate, 1, 0.0);
 
     t1 = GetSecs;
-    
+
     i=0;
-    
+
     % Infinite playback loop: Fetch video frames and display them...
     while 1
         % Check for abortion:
@@ -111,7 +111,7 @@ while (mydisplay.abortit < 2)
             break;
         end
 
- 
+
         % Only perform video image fetch/drawing if playback is active
         % and the movie actually has a video track (imgw and imgh > 0):
         if ((abs(mydisplay.rate)>0) && (imgw > 0) && (imgh > 0))
@@ -124,8 +124,8 @@ while (mydisplay.abortit < 2)
 
             % Valid texture returned?
             if tex < 0, break; end
-            
-            % No new frame in polling wait (blocking == 0). Just sleep 
+
+            % No new frame in polling wait (blocking == 0). Just sleep
             if tex == 0, WaitSecs('YieldSecs', 0.005); continue; end
 
             % Draw the new texture immediately to screen:
@@ -177,7 +177,7 @@ function myCleanup()
  sca;
  % only want to do this if an error occurred... look into this TODO
  % rethrow(lasterror); %#ok<LERR>
- 
+
 end
 
 function keys = setupKeys()
@@ -191,7 +191,7 @@ function keys = setupKeys()
     keys.down=KbName('DownArrow');
     keys.shift=KbName('RightShift');
     keys.colorPicker=KbName('c');
-    
+
 end
 
 
@@ -201,7 +201,7 @@ function mydisplay = setupExperiment(mydisplay)
  % Open onscreen window with gray background:
  mydisplay.screen = max(Screen('Screens'));
  PsychImaging('PrepareConfiguration');
- 
+
  if mydisplay.smallerWindow
     mydisplay.win = PsychImaging('OpenWindow', mydisplay.screen, mydisplay.bg, mydisplay.rect);
  else
