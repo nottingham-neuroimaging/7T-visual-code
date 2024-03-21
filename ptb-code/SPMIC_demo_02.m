@@ -16,7 +16,7 @@ function SPMIC_demo_02(varargin)
 % get additional inputs?
 eval(evalargs(varargin));
 
-if ieNotDefined('screen'), mydisplay.screen = 1; else  mydisplay.screen = screen, end
+if ieNotDefined('screen'), mydisplay.screen = 0; else  mydisplay.screen = screen, end
 if ieNotDefined('smallerWindow'), mydisplay.smallerWindow = true; else mydisplay.smallerWindow = smallerWindow; end
 
 % check for PIXX presence
@@ -135,10 +135,10 @@ function N = makeNoiseTextures(mydisplay, N_textures)
 %
 % N_textures determines how many different samples
 
-h = round(mydisplay.h/8);
-w = round(mydisplay.w/8);
+h = round(mydisplay.h/2);
+w = round(mydisplay.w/2 );
 
-noisePattern = rand(h,w , N_textures);
+noisePattern = randn(h,w , N_textures);
 
 f_gauss = fspecial("gaussian", 9, 2);
 
