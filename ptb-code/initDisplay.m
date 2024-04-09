@@ -17,6 +17,9 @@ mydisplay.backgroundMaskOut = [ 0 0 0]./256; % try black?
 mydisplay.tolerance = 0.01; % play with this to just catch bg
 mydisplay.rate = 1.0;
 
+% set this as default
+if ~isfield(mydisplay,'screen'), mydisplay.screen = 0; end
+
 % colors
 mydisplay.black=BlackIndex(mydisplay.screen);
 mydisplay.gray=GrayIndex(mydisplay.screen);
@@ -29,7 +32,6 @@ mydisplay.maxThreads = []; % default
 
 if ~isfield(mydisplay,'bg'), mydisplay.bg = 0.5*(mydisplay.gray+mydisplay.white); end
 if ~isfield(mydisplay,'smallerWindow'), mydisplay.smallerWindow = false; end
-if ~isfield(mydisplay,'screen'), mydisplay.screen = 0; end
 if ~isfield(mydisplay,'rect'), mydisplay.rect = [0 0 960 540]/2+100; end
 if ~isfield(mydisplay,'smallerWindow') 
         mydisplay.smallerWindow = true; % draw in smaller window 1/4 of the total screen?
