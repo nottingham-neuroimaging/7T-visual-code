@@ -17,7 +17,7 @@
 dname = '/Users/lpzds1/data/rich_movies/'
 
 % if somewhere else, use local folder...
-if ~exist(dname,'dir'), dname = '.'; end
+if ~exist(dname,'dir'), dname = 'assets/face-movies/'; end
 
 cwd = pwd()
 
