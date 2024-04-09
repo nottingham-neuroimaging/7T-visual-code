@@ -1,4 +1,4 @@
-function SPMIC_demo_02(varargin)
+ function mydisplay = SPMIC_demo_02(varargin)
 % SPMIC_demo_02 - play movie stimuli in a block design
 %
 %  purpose: load in one big movie w/ associated movietimes...
@@ -39,6 +39,10 @@ mydisplay.keys = initKeys();
 %% setup a cleanup function that gets called if problems
 cleanup = onCleanup(@myCleanup);
 
+%% general stimulus block durations (in seconds)
+restPeriod = 2; % 12
+stimPeriod = 4; % 12?
+
 % set up 1..N movies
 [mydisplay, allM] = loadAllMovies(mydisplay);
 
@@ -46,19 +50,27 @@ cleanup = onCleanup(@myCleanup);
 M = allM(1);
 
 % add the image texture to the movie struct, too
-N = makeNoiseTextures(mydisplay, 10);
-M.imageTexture = N.imageTexture;
-
+N = makeNoiseTextures(mydisplay);
+M.noiseid = N.noiseid;
 
 % TO DO - break this out into setup function
 % set up images stimuli (for static, rotating, expanind imaged on bg)
 I.imagePath = [pwd(), filesep(), 'assets', filesep(), 'object-images' filesep() '*.jpg'];
 [mydisplay, I] = setupStaticImageStimulus(mydisplay, I);
-I.imageTexture = N.imageTexture;
+I.noiseid = N.noiseid;
 
+F.imagePath = [pwd(), filesep(), 'assets', filesep(), 'face-images' filesep() '*.jpg'];
+[mydisplay, F] = setupStaticImageStimulus(mydisplay, F);
+F.noiseid = N.noiseid;
+
+
+% mydisplay is better place for noiseid // remove from M, I etc.
+mydisplay.noiseid = N.noiseid;
 
 % wait for a buttn press - convert to wait for trigger??
-tStart = KbWait();
+
+% tStart = KbWait();
+tStart = GetSecs();
 
 % N = updateNoiesTextures;
 
@@ -67,17 +79,33 @@ mydisplay.nBlocks = 12;
 
 while mydisplay.iBlock < mydisplay.nBlocks && ~mydisplay.abortit < 2
     
-    mydisplay.imageTexture = M.imageTexture;
-    
-    % display a image block
-    [mydisplay, I] = displayImageBlock(mydisplay, I, 6);
-
-    [mydisplay] = displayBlank(mydisplay, 5); % a blank block
+    % TODO - update seed for perlin procedural noise...
+    mydisplay.noiseid = M.noiseid;
     
     % display a movie block
-    [mydisplay, M] = displayMovieBlock(mydisplay, M, 6);
+    M.doubleup = true;
+    [mydisplay, M] = displayMovieBlock(mydisplay, M, stimPeriod);
+
+    % blank
+    [mydisplay] = displayBlank(mydisplay, restPeriod); % a blank block
+
+    % display a objects block
+    [mydisplay, I] = displayImageBlock(mydisplay, I, stimPeriod);
+
+    % blank
+    [mydisplay] = displayBlank(mydisplay, restPeriod); % a blank block
+
+    % display a faces block
+    [mydisplay, F] = displayImageBlock(mydisplay, F, stimPeriod);
+
+
+    [mydisplay] = displayBlank(mydisplay, restPeriod); % a blank block
     
-    [mydisplay] = displayBlank(mydisplay, 5); % a blank block
+    % display a movie block
+    M.doubleup = true;
+    [mydisplay, M] = displayMovieBlock(mydisplay, M, stimPeriod);
+    
+    % [mydisplay] = displayBlank(mydisplay, 5); % a blank block
     % display a static block
     
     fprintf('the number of blocks that have been run %d (of %d)\n', mydisplay.iBlock, mydisplay.nBlocks);
@@ -110,16 +138,7 @@ sca;
 % only want to do this if an error occurred... look into this TODO
 % rethrow(lasterror); %#ok<LERR>
 
-end
-
-function drawFixation(mydisplay)
-% draw a fixaton - make more generic later
-
-Screen('FillRect', mydisplay.win, [0.1, 0.1, 0.1], ...
-    CenterRectOnPoint([-10 -10 +10 +10], ...
-    mydisplay.xCenter, mydisplay.yCenter));
-
-end
+end 
 
 function s = setupStimulus()
 % set up dot stimulus as simple example
@@ -151,33 +170,27 @@ Screen('FillOval', mydisplay.win, s.colour, ...
 end
 
 
-function N = makeNoiseTextures(mydisplay, N_textures)
+function N = makeNoiseTextures(mydisplay)
 % make some static noise for N_textures frames...
 %
 % N_textures determines how many different samples
 
-h = round(mydisplay.h/2);
-w = round(mydisplay.w/2 );
+% for now... make it coarser (TODO: break this out and pass in as factor
+scaleFac = 6;
+assert(rem(mydisplay.w,scaleFac)==0, 'scaleFac causes non-integer tex size')
+assert(rem(mydisplay.h,scaleFac)==0, 'scaleFac causes non-integer tex size')
 
-noisePattern = randn(h,w , N_textures);
+[N.noiseid, N.noiserect] = CreateProceduralNoise(mydisplay.win, mydisplay.w/scaleFac, mydisplay.h/scaleFac, ...
+    'ClassicPerlin', [0.5 0.5 0.5 0.0]); 
 
-f_gauss = fspecial("gaussian", 9, 2);
-
-blurredPattern = zeros(size(noisePattern));
-for iTex = 1:N_textures
-    blurredPattern(:,:,iTex) = imfilter(noisePattern(:,:,iTex), f_gauss, "symmetric");
-end
-
-%   §imNoise = repelem(blurredPattern,1,1,1,3);
-imNoise = repelem(noisePattern,1,1,1,3);
-
-N.n = N_textures;
-N.current = 1;
-N.imNoise = permute(imNoise, [1,2,4,3]);
-
-%% TODO -- for now, only pick one ... but really LOOP!
-N.imageTexture = Screen('MakeTexture', mydisplay.win, N.imNoise(:,:,:,N.current));
-
+% the following does not work on procedural textures...
+% disp('blurring via GPU')
+% % Example: Convolution with 13x13 gaussian blur operator:
+% blurop = CreateGLOperator(mydisplay.win); 
+% Add2DConvolutionToGLOperator(blurop, fspecial('gaussian', 13, 5.5));
+% 
+% % Applying the blurring
+% N.noiseid = Screen('TransformTexture', N.noiseidIn, blurop);
 
 end
 
@@ -191,6 +204,8 @@ function [mydisplay, I] = setupStaticImageStimulus(mydisplay, I)
 %
 % 
 
+MAX_FILES_TO_LOAD = 100;
+
 t = tic();
 
 if ~isfield(I, 'imagePath') 
@@ -203,10 +218,19 @@ files = dir(I.imagePath);
 nFiles = numel(files);
 fprintf('there are %d files\n', nFiles);
 
+if ~isfield(I, 'loadAll'), I.loadAll = false(); end
+
 I.n = nFiles;
 I.images = struct();
 I.backgroundMaskOut =  [1, 1, 1];
-I.tolerance = 0.05;
+I.tolerance = 0.08;
+
+if I.loadAll 
+    filesToLoad = 1:nFiles;
+else
+    filesToLoad = randperm(nFiles);
+    filesToLoad = filesToLoad(1:max(MAX_FILES_TO_LOAD,nFiles)); %only keep maxfiles or 100, whichever is greater
+end
 
 for iFile = 1:nFiles
     pname = files(iFile).folder;
@@ -325,7 +349,7 @@ inM(1).moviename = [pwd(), '/assets/face-movies/ALL_MOVIES.mp4'];
 inM(1).backgroundMaskOut = [0,0,0]/256;
 inM(1).tolerance = 0.02;
 inM(1).scaled = true;
-inM(1).scaleFac = 0.75;
+inM(1).scaleFac = 0.9;
 
 
 % loop over
@@ -394,12 +418,21 @@ while 1 && (GetSecs()-t1) < M.duration
         if M.tex == 0, WaitSecs('YieldSecs', 0.005); continue; end
         
         % Draw the new texture immediately to screen:
+        contrast = 1.0;
+        seed = 1;
+        % Screen('DrawTexture', windowPtr, noiseid, [], dstRect, [], [], [], ...
+        %         modulateColor, [], [], [contrast, seed, 0, 0]);
+        % Screen('DrawTexture', mydisplay.win, M.noiseid, [], mydisplay.winrect,[], [], [], ...
+        %    [], [],[], [contrast, seed, 0, 0]);
         
-        % Screen('DrawTexture', mydisplay.win, M.imageTexture, [], [], 0);
-        Screen('DrawTexture', mydisplay.win, M.imageTexture, [], mydisplay.winrect, 0);
-        
-        Screen('DrawTexture', mydisplay.win, M.tex, [], M.dstRect, [], [], [], [], mydisplay.shader);
-        
+        if isfield(M,'doubleup') && M.doubleup == true
+            delta = [1 0 1 0]*mydisplay.w/5;
+            Screen('DrawTexture', mydisplay.win, M.tex, [], M.dstRect-delta, [], [], [], [], mydisplay.shader);
+            Screen('DrawTexture', mydisplay.win, M.tex, [], M.dstRect+delta, [], [], [], [], mydisplay.shader);
+        else
+            Screen('DrawTexture', mydisplay.win, M.tex, [], M.dstRect, [], [], [], [], mydisplay.shader);
+        end
+
         % draw fixation point
         drawFixation(mydisplay);
         
@@ -448,8 +481,8 @@ while 1 && (GetSecs()-t1) < duration
     
     
     % Color the screen bg color
-    if isfield(mydisplay, 'imageTexture')
-        Screen('DrawTexture', mydisplay.win, mydisplay.imageTexture, [], mydisplay.winrect, 0);
+    if isfield(mydisplay, 'noiseid')
+        Screen('DrawTexture', mydisplay.win, mydisplay.noiseid, [], mydisplay.winrect, 0);
     else
         Screen('FillRect', mydisplay.win, mydisplay.bg);
     end
@@ -466,6 +499,7 @@ mydisplay.iBlock = mydisplay.iBlock + 1;
 
 end
 
+%% 
 function [mydisplay, I] = displayImageBlock(mydisplay, I, duration)
 % displayImageBlock - display a block of a certain duration
 %
@@ -523,9 +557,18 @@ while 1 && elapsedT < I.duration
     end  
     % Draw the new texture immediately to screen:
         
-    % Screen('DrawTexture', mydisplay.win, M.imageTexture, [], [], 0);
-    Screen('DrawTexture', mydisplay.win, I.imageTexture, [], mydisplay.winrect, 0);
+    modulateColor = [0 0 0];
+    contrast = 0.5;
+    seed = 1;
+    % Screen(.DrawTexture., windowPointer, texturePointer [,sourceRect] [,destinationRect] ...
+    % [,rotationAngle] [, filterMode] [, globalAlpha] ...
+    % [, modulateColor] [, textureShader] [, specialFlags] [, auxParameters]);
+    Screen('DrawTexture', mydisplay.win, I.noiseid, [], mydisplay.winrect, ...
+        [], [], [], ...
+        modulateColor, [], [], [contrast, seed, 0, 0]);
+    % Screen('DrawTexture', mydisplay.win, I.imageTexture, [], mydisplay.winrect, 0);
     %                                               M.dstRect    
+    
     Screen('DrawTexture', mydisplay.win, I.tex, [], []       , [], [], [], [], mydisplay.shader);
         
     % draw fixation point
@@ -534,15 +577,15 @@ while 1 && elapsedT < I.duration
         
     % Regular without real use of imaging pipeline. Skip waiting
     % for flip completion, to squeeze out a bit more fps:
-    Screen('Flip', mydisplay.win, [], [], 1)
+    Screen('Flip', mydisplay.win, [], [], 1);
         
     % Framecounter:
     i=i+1;
     elapsedT = GetSecs()-t1;
 end
 
-% Release texture:
-Screen('Close', I.tex);
+% Release texture / not needed? causes error on esc, abort!
+% Screen('Close', I.tex);
 
 telapsed = GetSecs - t1;
 fprintf('Elapsed time %f seconds, for %i frames. Average framerate %f fps.\n', telapsed, i, i / telapsed);
