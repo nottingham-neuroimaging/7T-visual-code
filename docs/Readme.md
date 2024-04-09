@@ -16,7 +16,14 @@ Coding on macOS (`x86_64` version of `octave`)
 - the preferred way of driving the system is under Linux\`ubuntu` through `gnu/octave` (other possibilities exist but are not a top-priority for now)
 
 
-## To-do's
+## Sample code for testing
+
+- `SPMIC_demo_01` - grabs display, puts a yellow dot on the screen and moves it. For checking whether `VPixx` display gets picked up etc
+- `SPMIC_demo_02` - simple implementation of a block design (static and moving faces, static objects, gray background). Timing can be adjusted pretty easily - has some opinionated suggestions on how to organise code.
+- `ProceduralNoiseForObjects` - how to make dynamic noise using GPU (rather than pre-computed images and blitting them). Still needs some debugging re ALPHA blending to make it work with background suppression in movie / masked image stimuli
+- `movie_test_{01,02}` - initial movie testing to check that movies can be loaded ok and display on screen. working.
+
+## To-dos (some physical)
 
 - [ ] add a second display for coding (current console room display mirrors projector)
 - [ ] test 45º mirror for projecting along line of bore + screen material
