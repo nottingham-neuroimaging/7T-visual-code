@@ -1,6 +1,6 @@
 function [BLC] = BlockLengthCalc(TargetBlockLength,TRin)
 %
-% Calculates the closest block length to a target block length that can .
+% Calculates the closest multiple of TR to target block length.
 %
 % Input: Desired block length, TR.
 %
