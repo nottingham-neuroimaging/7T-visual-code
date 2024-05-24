@@ -22,7 +22,7 @@ else
     mydisplay.screen = screen;
 end
 if ieNotDefined('smallerWindow')
-    mydisplay.smallerWindow = true; 
+    mydisplay.smallerWindow = false; 
 else
     mydisplay.smallerWindow = smallerWindow; 
 end
@@ -76,6 +76,12 @@ tStart = GetSecs();
 
 mydisplay.iBlock = 0;
 mydisplay.nBlocks = 12;
+
+
+%% go for triggering now!
+
+r = getTriggerSPMIC(mydisplay);
+
 
 while mydisplay.iBlock < mydisplay.nBlocks && ~mydisplay.abortit < 2
     

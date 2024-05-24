@@ -23,6 +23,13 @@ Coding on macOS (`x86_64` version of `octave`)
 - `ProceduralNoiseForObjects` - how to make dynamic noise using GPU (rather than pre-computed images and blitting them). Still needs some debugging re ALPHA blending to make it work with background suppression in movie / masked image stimuli
 - `movie_test_{01,02}` - initial movie testing to check that movies can be loaded ok and display on screen. working.
 
+## Triggering
+
+Until we have figured out how to use the `DataPixx` for triggering we can rely on the USB reponse box for providng that trigger.
+
+`KbDemo()` reports the Key "5" from the USB box, so can reuse simple `KbCheck` logic in a tight loop for triggering.
+
+
 ## To-dos (some physical)
 
 - [ ] add a second display for coding (current console room display mirrors projector)

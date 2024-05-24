@@ -16,11 +16,18 @@ mydisplay = initDisplay(mydisplay);
 
 %% Setup key mapping:
 keys = initKeys();
-       
+% also
+mydisplay.keys = keys;       
+
 %% setup a cleanup function that gets called if problems
 cleanup = onCleanup(@myCleanup);
 
 s = setupStimulus();
+
+%% go for triggering now!
+
+r = getTriggerSPMIC(mydisplay);
+
 
 while (mydisplay.abortit < 2) 
 
