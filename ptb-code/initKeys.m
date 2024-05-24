@@ -12,6 +12,6 @@ function keys = initKeys()
     keys.down=KbName('DownArrow');
     keys.shift=KbName('RightShift');
     keys.colorPicker=KbName('c');
-    keys.trigger=KbName('5'); % this is correct for SPMIC, fORP, 7T
+    keys.trigger=KbName('5%'); % this is correct for SPMIC, fORP, 7T
     
 end
