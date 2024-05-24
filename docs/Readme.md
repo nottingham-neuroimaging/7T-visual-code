@@ -30,7 +30,8 @@ Coding on macOS (`x86_64` version of `octave`)
 - [ ] document minimal test code + examples
 - [ ] document (SOP) for switching on/off projector, how to bring your own code, etc.
 - [ ] provide guidance to those wanting to write code away from console room (eg [coding / debugging on MacOS/Apple hardware](./macos-notes.md) requires some additional hoop-jumping)
- 
+- [ ] double check netlifly deploy of docs
+
 ## Initial vision experiment for `UHFVIS` project
 
 Some notes and a [scanning-readme](./vision-experiment.md) for getting off the ground.
