@@ -9,7 +9,7 @@ end
 
 t1 = GetSecs;
 
-while 1 && (GetSecs()-t1)  % < M.duration
+while 1 % && (GetSecs()-t1)  < M.duration
     
     % Check for abortion:
     mydisplay.abortit = 0;
