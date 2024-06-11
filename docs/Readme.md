@@ -13,7 +13,9 @@ Coding on macOS (`x86_64` version of `octave`)
 
 - we have a `PROPixx` display system with audio, button boxes, analogue and digital I/O
 - the projector lives in the scanner room in a shielded box
-- the preferred way of driving the system is under Linux\`ubuntu` through `gnu/octave` (other possibilities exist but are not a top-priority for now)
+- the preferred way of driving the system is under Linux\`ubuntu` through `gnu/octave` 
+- we have also installed and checked `PsychoPy` under Windows, which works well.
+- switching the projector on/off is via software. You can use the `PyUtil` tool under both `ubuntu` and `Windows` partitions or `vputil` command in Terminal.
 
 
 ## Sample code for testing
@@ -29,15 +31,13 @@ Until we have figured out how to use the `DataPixx` for triggering we can rely o
 
 `KbDemo()` reports the Key "5" from the USB box, so can reuse simple `KbCheck` logic in a tight loop for triggering.
 
-
 ## To-dos (some physical)
 
-- [ ] add a second display for coding (current console room display mirrors projector)
-- [ ] test 45º mirror for projecting along line of bore + screen material
-- [ ] document minimal test code + examples
+- [x] add a second display for coding (current console room display mirrors projector). Done. Thanks to AP.
+- [x] document minimal test code + examples
 - [ ] document (SOP) for switching on/off projector, how to bring your own code, etc.
-- [ ] provide guidance to those wanting to write code away from console room (eg [coding / debugging on MacOS/Apple hardware](./macos-notes.md) requires some additional hoop-jumping)
-- [ ] double check netlifly deploy of docs
+- [ ] test 45º mirror for projecting along line of bore + screen material
+- [x] provide guidance to those wanting to write code away from console room (eg [coding / debugging on MacOS/Apple hardware](./macos-notes.md) requires some additional hoop-jumping)
 
 ## Initial vision experiment for `UHFVIS` project
 
