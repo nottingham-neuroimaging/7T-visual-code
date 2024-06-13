@@ -22,9 +22,9 @@ Coding on macOS (`x86_64` version of `octave`)
 The setup is made up of a stack of hardware blocks (PROPixx, ResponsePixx, ...) - there are two screens / one mirrors what the participant sees.
 
 <p float="left">
-    <img alt="Setup in console rool" src="./assets/whole-setup.png" width="100%"/>
-    <img alt="Back of the VPixx setup" src="./assets/back-of-vpixx.png" width="100%"/>
-    <img alt="The mirror system in situ" src="./assets/mirror-in-situ-2.png" width="100%"/>
+    <img alt="Setup in console rool" src="./assets/whole-setup.png" width="32%"/>
+    <img alt="Back of the VPixx setup" src="./assets/back-of-vpixx.png" width="32%"/>
+    <img alt="The mirror system in situ" src="./assets/mirror-in-situ-2.png" width="32%"/>
 </p>
 
 The front surface mirror is positioned to project the image (from the `PROPixx` box on the left towards the participant in the bore).
