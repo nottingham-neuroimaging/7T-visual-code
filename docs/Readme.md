@@ -21,32 +21,18 @@ Coding on macOS (`x86_64` version of `octave`)
 
 The setup is made up of a stack of hardware blocks (PROPixx, ResponsePixx, ...) - there are two screens / one mirrors what the participant sees.
 
-<center>
-<img src="./assets/whole-setup.png" width="50%"/>
-<caption>
-Setup in the console room.
-</caption>
-</center>
+<p float="left">
+    <img alt="Setup in console rool" src="./assets/whole-setup.png" width="100%"/>
+    <img alt="Back of the VPixx setup" src="./assets/back-of-vpixx.png" width="100%"/>
+    <img alt="The mirror system in situ" src="./assets/mirror-in-situ-2.png" width="100%"/>
+</p>
 
+The front surface mirror is positioned to project the image (from the `PROPixx` box on the left towards the participant in the bore).
 
-<center>
-<img src="./assets/back-of-vpixx.png" width="50%"/>
-<caption>
-The back / connection side of the stack of hardware blocks.
-</caption>
-</center>
+This mirror is required inside the scanner room to redirect the projected image onto the display screen, which is suspended from the ceiling.
 
-A mirror is required inside the scanner room to redirect the projected image onto the display screen, which is suspended from the ceiling.
+**Be very careful when moving the mirror into place** and avoid touching the mirror surface itself (it is a front surface mirror, so doesn't have a protective glass coating - finger prints can permanently damage it).
 
-**Be very careful when moving this mirror** and avoid touching the mirror surface itself (it is a front surface mirror, so doesn't have a protective glass coating - finger prints can permanently damage it).
-
-
-<center>
-<img src="./assets/mirror-in-situ-2.png" width="50%"/>
-<caption>
-The front surface mirror positioned to project the image (from the `PROPixx` box on the left towards the participant in the bore).
-</caption>
-</center>
 
 ## Sample code for testing
 
