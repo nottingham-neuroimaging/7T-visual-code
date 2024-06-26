@@ -6,12 +6,6 @@
 %           - timing approx 12s on 12s off / 24s full cucle
 %           - but adjust to TR
 %
-%
-% ds 2024-03-12 wrote it based on docs & demo
-% ds 2024-06-26 getting ready for scanning
-
-% get additional inputs?
-eval(evalargs(varargin));
 
 if ieNotDefined('screen')
     mydisplay.screen = 0;
@@ -600,8 +594,9 @@ while 1 && elapsedT < I.duration
         modulateColor, [], [], [contrast, seed, 0, 0]);
     % Screen('DrawTexture', mydisplay.win, I.imageTexture, [], mydisplay.winrect, 0);
     %                                               M.dstRect    
-    
-    Screen('DrawTexture', mydisplay.win, I.tex, [], []       , [], [], [], [], mydisplay.shader);
+    % keyboard
+    displayRect = CenterRectOnPoint(mydisplay.winrect([1,2,4,4]),mydisplay.xCenter, mydisplay.yCenter);
+    Screen('DrawTexture', mydisplay.win, I.tex, [], []      , [], [], [], [], mydisplay.shader);
         
     % draw fixation point
     drawFixation(mydisplay);
