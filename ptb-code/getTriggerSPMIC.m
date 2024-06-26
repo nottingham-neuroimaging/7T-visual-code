@@ -27,8 +27,7 @@ while 1
     end
 
     % check for trigger
-    if (keyIsDown == 1 &&  any(keyCode))
-        % keyCode(mydisplay.keys.trigger))
+    if (keyIsDown == 1 && keyCode(mydisplay.keys.trigger))
         % Set the abort-demo flag.
         mydisplay.abortit = 2; % TODO
         r = 2;
