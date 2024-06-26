@@ -9,9 +9,13 @@ end
 
 t1 = GetSecs;
 
+<<<<<<< HEAD
 fprintf('**** Waiting for trigger **** [key: %d]\n', mydisplay.keys.trigger);
 
 while 1 
+=======
+while 1 % && (GetSecs()-t1)  < M.duration
+>>>>>>> rowan-testing
     
     % Check for abortion:
     mydisplay.abortit = 0;
