@@ -1,4 +1,4 @@
-function r = getTriggerSPMIC(mydisplay)
+function [r, tStart] = getTriggerSPMIC(mydisplay)
 % getTriggerSPMIC - get the trigger from key 5 via USB
 %
 % ds 2024-05-24 getting ready for VPIXX reprise
@@ -9,7 +9,9 @@ end
 
 t1 = GetSecs;
 
-while 1 % && (GetSecs()-t1)  < M.duration
+fprintf('**** Waiting for trigger **** [key: %d]\n', mydisplay.keys.trigger);
+
+while 1 
     
     % Check for abortion:
     mydisplay.abortit = 0;
@@ -20,6 +22,7 @@ while 1 % && (GetSecs()-t1)  < M.duration
         mydisplay.abortit = 2;
         r = 2;
         disp('@ABORT!');
+        tStart = nan;
         break;
     end
 
@@ -30,6 +33,7 @@ while 1 % && (GetSecs()-t1)  < M.duration
         mydisplay.abortit = 2; % TODO
         r = 2;
         disp('@TRIGGER');
+        tStart = GetSecs(); % keep track of time.
         break;
     end
 
