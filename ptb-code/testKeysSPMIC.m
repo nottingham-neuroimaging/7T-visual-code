@@ -5,13 +5,13 @@
 WaitSecs(1.0); % make sure we don't catch enter from running script
 
 % set up
-setupKeysSPMIC()
+s = setupKeysSPMIC();
 
 % run a loop and do some magic 
 while ~KbCheck
 
-    getKeysSPMIC()
-
+    %getKeysSPMIC()
+    getDigIOSPMIC();
 end
 
 % clean up (like adults)

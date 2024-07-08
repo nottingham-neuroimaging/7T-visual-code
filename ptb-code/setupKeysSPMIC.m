@@ -1,4 +1,4 @@
-function [] = setupKeysSPMIC()
+function [out] = setupKeysSPMIC()
 % setupKeysSPMIC - set up ReponsePixx stuff for reading keys
 %
 % see also: DatapixxDinBasicDemo
@@ -17,6 +17,7 @@ Datapixx('RegWrRd');    % Synchronize DATAPixx registers to local register cache
 % Show how many TTL input bits are in the Datapixx
 nBits = Datapixx('GetDinNumBits');
 fprintf('\nDATAPixx has %d TTL input bits\n', nBits);
+out.nBits = nBits;
 
 % RESPONSEPixx has 5 illuminated buttons.
 % We drive those button lights by turning around 5 DIN bits to outputs.
@@ -32,6 +33,7 @@ Datapixx('SetDinDataOutStrength', 1);   % Set brightness of buttons
 Datapixx('SetMarker');
 Datapixx('RegWrRdVideoSync');
 stimulusOnsetTime = Datapixx('GetMarker');
+out.stimulusOnsetTime = stimulusOnsetTime;
 
 % Fire up the logger
 Datapixx('EnableDinDebounce');      % Filter out button bounce
