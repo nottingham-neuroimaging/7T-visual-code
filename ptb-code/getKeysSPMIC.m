@@ -29,6 +29,12 @@ end
                     fprintf('0');
                 end
             end
+            fprintf('%d\n', data);
+            % pin number 5 on DigIn box is in the 6th position low to high
+            %if bitand(data(6), 2^6) > 0 
+            %    fprintf('uhoh!\n');
+            %end
+            %fprintf('as int: %d\n',data);
             fprintf('\n');
         end
         if (exist('OCTAVE_VERSION'))
