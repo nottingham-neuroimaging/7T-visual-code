@@ -1,13 +1,17 @@
-function out = getDigIOSPMIC(stimulusOnsetTime, params, debugMode)
+function out = getDigIOSPMIC(stimulusOnsetTime, debugMode)
 % getDigIOSPMIC - read out ResponsePixx DIO presses
 %
 % just gets an instantaneous readout of dig PORTs 
 %
-% can take a params struct as 2nd input
-%    params.validBits
-%    params.tiggerBit
-%    params.keyColour
-%    params.keyPosition
+%    in: [stimulusOnsetTime] (optional) - a t0 for timestamps 
+%                          [default: at start of this function call]
+%        [debugMode] - show additional debug info 
+%
+%    out: a struct with fields
+%         .bits
+%         .keyColour
+%         .keyPosition
+%         .timeStamp
 %
 % 2024-07-08, denis schluppeck
 
@@ -15,24 +19,19 @@ if nargin < 1 || isempty(stimulusOnsetTime)
     stimulusOnsetTime = Datapixx('GetMarker');
 end
 
-if nargin < 2 || isempty(params)
-    params = struct('validBits', [1; 2; 3; 4; 6], 'triggerBit', 6, ...
-                    'keyColour', {'red', 'yellow', 'green', 'blue', 't'}, ...
-                    'keyPosition', {'right', 'top', 'left', 'bottom', 't'});
-end
 
 % dereferencing from struct causes errors w/ intersect, union / WTF?
 % so unpack here...
-validBits = params.validBits;
-triggerBit = params.triggerBit;
+validBits = [1; 2; 3; 4; 6]; 
+triggerBit = 6; 
 keyPosition = {'right', 'top', 'left', 'bottom', 't'};
 keyColour = {'red', 'yellow', 'green', 'blue', 't'};
 
-if nargin < 3 || isempty(debugMode)
+if nargin < 2 || isempty(debugMode)
     debugMode = false;
 end
 % init return argument
-out = struct();
+out = []; % default, nothing!
 
 Datapixx('RegWrRd');
 status = Datapixx('GetDinStatus');
@@ -52,9 +51,9 @@ if (status.newLogFrames > 0)
             out(i).bits = c;
             out(i).keyColour = keyColour{ia};
             out(i).keyPosition = keyPosition{ia};
-            out(i).timeStamp = tt;
+            out(i).timeStamp = tt - stimulusOnsetTime;
             if length(c) == 1
-                fprintf('** %s, %s at %.2f **\n',out(i).keyColour, out(i).keyPosition, out(i).timeStamp);
+                fprintf('(getDigIOSPMIC) %s, %s at %.2f **\n',out(i).keyColour, out(i).keyPosition, out(i).timeStamp);
             end
 
         end
@@ -86,7 +85,7 @@ if (status.newLogFrames > 0)
             fprintf(' | \n');
 
             if any(intersect(validBits, pinsHigh) )
-                fprintf('***** received something\n');
+                fprintf('***** received something *****\n');
             end
         end % debugMode   
     

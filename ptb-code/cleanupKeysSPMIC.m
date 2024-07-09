@@ -4,13 +4,13 @@ function cleanupKeysSPMIC()
 % 2024-06-20, in console room
 
 % Show final status of digital input logger
-fprintf('\nStatus information for digital input logger:\n');
+fprintf('\n(cleanupKeysSPMIC) Status information for digital input logger:\n');
 disp(Datapixx('GetDinStatus'));
 
 % Job done
 Datapixx('StopDinLog');
 Datapixx('RegWrRd');
 Datapixx('Close');
-fprintf('\nReponsePixx cleaned up\n\n');
+fprintf('\n(cleanupKeysSPMIC) ReponsePixx cleaned up\n\n');
 
 end

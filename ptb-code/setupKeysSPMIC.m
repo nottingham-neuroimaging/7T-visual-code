@@ -16,7 +16,7 @@ Datapixx('RegWrRd');    % Synchronize DATAPixx registers to local register cache
 
 % Show how many TTL input bits are in the Datapixx
 nBits = Datapixx('GetDinNumBits');
-fprintf('\nDATAPixx has %d TTL input bits\n', nBits);
+fprintf('\n(setupKeysSPMIC) DATAPixx has %d TTL input bits\n', nBits);
 out.nBits = nBits;
 
 % RESPONSEPixx has 5 illuminated buttons.
