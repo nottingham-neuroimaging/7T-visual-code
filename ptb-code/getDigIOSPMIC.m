@@ -32,7 +32,7 @@ if nargin < 3 || isempty(debugMode)
     debugMode = false;
 end
 % init return argument
-out = [];
+out = struct();
 
 Datapixx('RegWrRd');
 status = Datapixx('GetDinStatus');
@@ -49,17 +49,20 @@ if (status.newLogFrames > 0)
         pinsHigh = strfind(dataString,'1');
         [c, ia] = intersect(validBits, pinsHigh);
         if any(c)
-            fprintf('***** received something\n');
-            out.bits = c;
-            %out.keyColour = keyColour(ia);
-            %out.positions = keyPosition(ia);
-            disp(keyColour{ia});
-            disp(keyPosition{ia});
+            out(i).bits = c;
+            out(i).keyColour = keyColour{ia};
+            out(i).keyPosition = keyPosition{ia};
+            out(i).timeStamp = tt;
+            if length(c) == 1
+                fprintf('** %s, %s at %.2f **\n',out(i).keyColour, out(i).keyPosition, out(i).timeStamp);
+            end
+
         end
         
         if debugMode
             fprintf('frame: %00d | rtime = %f', i, tt(i)-stimulusOnsetTime);
             fprintf(', button states = ');
+            
             % go from high bit to low bit... 16 bits in total
             % print from left to right:
             for bit = 15:-1:0 % only do 6 low bits not 16??              
@@ -85,7 +88,7 @@ if (status.newLogFrames > 0)
             if any(intersect(validBits, pinsHigh) )
                 fprintf('***** received something\n');
             end
-        end    
+        end % debugMode   
     
     
     end
