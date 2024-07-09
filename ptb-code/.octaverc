@@ -1,0 +1,3 @@
+# octaverc for making sure paths are set correctly
+addpath('~/projects/7T-visual-code/ptb-code/MatlabUtilities');
+disp('(octaverc) added matlab utilies')
