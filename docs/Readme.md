@@ -48,6 +48,9 @@ Syncing stimulus timing with data acquisition on the scanner is a crucial aspect
 
 The `ResponsePixx` blocks that are part of our setup allow for really precise timing at or better than the frame rate of display.
 
+- Here are [some details (and code examples)](./octave-triggering.md) of how to get the scanner trigger and button presses via `octave/Psychtoolbox`
+- To trigger your `PsychoPy` experiment, looks for details here [to come!]
+
 ## To-dos (some physical)
 
 - [x] add a second display for coding (current console room display mirrors projector). Done. Thanks to AP. Setup on `ubuntu` now also allows for non-mirrored 2nd display
