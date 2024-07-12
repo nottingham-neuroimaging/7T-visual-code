@@ -7,6 +7,7 @@
 ## Things to do to get things running.
 
 - Download recent version of `Psychtoolbox` (see [github repo](https://github.com/Psychtoolbox-3/Psychtoolbox-3/tree/3.0.19.7))
+
 ```matlab
 >> PsychtoolboxVersion
 ans =
@@ -26,21 +27,23 @@ Operating System: macOS  Version: 14.3.1 Build: 23D60
 - equivalent for `octave`
   - install `brew` (https://brew.sh/)
   - look for `octave` versions in the past:
-  ```bash
-  brew search octave
-  ```
+
+```bash
+brew search octave
+```
 
 We actually need to do some backflips to get `x84_64` binaries of octave through brew ( [see this article](https://www.wisdomgeek.com/development/installing-intel-based-packages-using-homebrew-on-the-m1-mac/) ), so let's check if we can jsut download the binaries for octave another way :grimacing: 
 
 - **nope**... won't work, so back to the *two homebrew* versions
-  ```bash
-  # .... 
-  octave 8.4.0_2 is already installed but outdated (so it will be upgraded).
-  Error: Cannot install under Rosetta 2 in ARM default prefix (/opt/homebrew)!
-  To rerun under ARM use:
-    arch -arm64 brew install ...
-  To install under x86_64, install Homebrew into /usr/local.
-  ```
+
+```bash
+# .... 
+octave 8.4.0_2 is already installed but outdated (so it will be upgraded).
+Error: Cannot install under Rosetta 2 in ARM default prefix (/opt/homebrew)!
+To rerun under ARM use:
+  arch -arm64 brew install ...
+To install under x86_64, install Homebrew into /usr/local.
+```
  
 ## get a `Rosetta` flavour shell
 
@@ -71,7 +74,7 @@ arch -x84_64 /usr/local/homebrew/bin/octave
 ```
 ### For multimedia / video
 
-Need to install version of `GStreamer` (https://gstreamer.freedesktop.org/download//#macos). Apparently `arch` is ok to be `x86_64?` (will this play nicely with intel code running octave?)
+Need to install version of `GStreamer` <https://gstreamer.freedesktop.org/download//#macos>. Apparently `arch` is ok to be `x86_64?` (will this play nicely with intel code running octave?)
 
 
 ## Notes / video log
