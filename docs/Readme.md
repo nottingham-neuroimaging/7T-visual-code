@@ -38,8 +38,9 @@ This mirror is required inside the scanner room to redirect the projected image 
 
 This is done is software - the power to the projector should always be on, so you can use a software call to *wake/sleep* the projector. (You may have to check a switch in the breaker/box in the equipment room to the left of the scanner room to make sure).
 
-- in the `PyUtil` GUI programme, you should see a button in the menu bar called **Wake ProPIXX** (or **Sleep `ProPIXX` if it is currently on).
+- in the `PyUtil` GUI programme, you should see a button in the menu bar called **Wake ProPIXX** (or **Sleep ProPIXX** if it is currently on).
 - from the command line, if you prefer, you can call the `vputil` command
+  
 ```bash
 # either start the command line utility and follow meny into 
 # "System commands" - by entering 0
