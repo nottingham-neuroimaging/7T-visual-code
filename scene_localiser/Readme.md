@@ -1,4 +1,10 @@
-# stimulus details (2018)
+# Note
+
+This code is included for reference on how you could code up visual experiments. The implementation actually uses a library called `mgl` which really only works under macOS.
+
+Some of the assets (faces, objects, scenes) might be useful for ou. They are used in some of the example code in `ptb-code` folder.
+
+## stimulus details (2018)
 
 The ``scene_localiser()`` experiment is a randomised block-design experiment.
 

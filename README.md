@@ -24,15 +24,18 @@ Trying out a couple of provided demos to test digital IO and also ProPIXX displa
 
 ### macOS laptops
 
+This is mostly relevant for coding up experiments off-site, as the console room computer is set up for Windows11/Ubuntu.
+
 ```bash
 # remember to run matlab w/o desktop for MGL
 matlab -nodesktop
 ```
 
-Running MGL code is possible, although it requires re-plugging DVI and USB cables into the `VPixx` setup, so not advisable.
-
-## Setting up VPixx / debugging code on `macOS`
-
 To get some code running under `macOS` for developing away from console room requires dealing with `Psychtoolbox`/`macOS` madness.
 
-- [Some setup notes](./docs/macos-notes.md) to make reproducing this easier.
+- [Some setup notes](./docs/macos-notes.md) to make reproducing this easier. There are instructions on how to get the free/open `octave` to run with the correction version for Psychtoolbox code.
+
+Running MGL code is possible, although it requires re-plugging DVI and USB cables into the `VPixx` setup, so not advisable.
+
+
+

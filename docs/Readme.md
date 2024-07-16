@@ -34,9 +34,27 @@ This mirror is required inside the scanner room to redirect the projected image 
 
 **Be very careful when moving the mirror into place** and avoid touching the mirror surface itself (it is a front surface mirror, so doesn't have a protective glass coating - finger prints can permanently damage it).
 
+## Switching on the projector
+
+This is done is software - the power to the projector should always be on, so you can use a software call to *wake/sleep* the projector. (You may have to check a switch in the breaker/box in the equipment room to the left of the scanner room to make sure).
+
+- in the `PyUtil` GUI programme, you should see a button in the menu bar called **Wake ProPIXX** (or **Sleep `ProPIXX` if it is currently on).
+- from the command line, if you prefer, you can call the `vputil` command
+```bash
+# either start the command line utility and follow meny into 
+# "System commands" - by entering 0
+vputil
+
+# or straight away
+vputil -ppx a # awake
+vputil -ppx s # sleep
+```
+
+**Make sure that you swith the projector off at the end of your experiment.**
 
 ## Sample code for testing
 
+- `testKeysSPMIC()` - for some code that tests the response box and triggering
 - `SPMIC_demo_01` - grabs display, puts a yellow dot on the screen and moves it. For checking whether `VPixx` display gets picked up etc
 - `SPMIC_demo_02` - simple implementation of a block design (static and moving faces, static objects, gray background). Timing can be adjusted pretty easily - has some opinionated suggestions on how to organise code.
 - `ProceduralNoiseForObjects` - how to make dynamic noise using GPU (rather than pre-computed images and blitting them). Still needs some debugging re ALPHA blending to make it work with background suppression in movie / masked image stimuli
@@ -47,6 +65,8 @@ This mirror is required inside the scanner room to redirect the projected image 
 Syncing stimulus timing with data acquisition on the scanner is a crucial aspect of running a successful functional MRI experiment.
 
 The `ResponsePixx` blocks that are part of our setup allow for really precise timing at or better than the frame rate of display.
+
+**The BNC connector that sends the trigger from the scanner should go into pin 5 (`Din05`) on the `ResponsePixx` input box.
 
 - Here are [some details (and code examples)](./octave-triggering.md) of how to get the scanner trigger and button presses via `octave/Psychtoolbox`
 - To trigger your `PsychoPy` experiment, looks for details here [to come!]
@@ -59,6 +79,7 @@ The `ResponsePixx` blocks that are part of our setup allow for really precise ti
 - [x] test 45º mirror for projecting along line of bore + screen material
 - [x] provide guidance to those wanting to write code away from console room (eg [coding / debugging on MacOS/Apple hardware](./macos-notes.md) requires some additional hoop-jumping)
 - [x] triggering via `ResponsePixx` system. Code that uses the Digital IN demo snippets from `VPixx` documentation. Working.
+- [ ] `python` route for triggering via `ResponsePixx` system. Code that uses the Digital IN demo 
 
 ## Initial vision experiment for `UHFVIS` project
 
