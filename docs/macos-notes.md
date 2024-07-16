@@ -2,9 +2,9 @@
 
 ## Issues
 
-`Psychtoolbox` does not deal well with recent version of `macOS`, and especially running on the ARM chips. We don't actually want to run mission critical code on the 7T console from Psychtoolbox (`mgl` is a good alternative, but doesn't talk to the `VPixx` afaik so far)... but for coding and testing, we want to be able to run things on Apple MacBooks.
+`Psychtoolbox` does not deal well with recent version of `macOS`, and especially running on the ARM chips. We don't actually want to run mission critical code on the 7T console from Psychtoolbox. `mgl` is a really good alternative, but would require a couple of fixes to integrate with `VPixx`, as button response and scanner trigger come through a different route (note `HID` / `USB` but the digital in ports from `VPixx/ResponsePixx`)... eiether way, for coding and testing, we want to be able to run things on Apple MacBooks with the new Apple Silicon, as many people, including students have those as their main work horse computers.
 
-## Things to do to get things running.
+## Things to do, to get things running.
 
 - Download recent version of `Psychtoolbox` (see [github repo](https://github.com/Psychtoolbox-3/Psychtoolbox-3/tree/3.0.19.7))
 
