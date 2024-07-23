@@ -22,10 +22,15 @@ end
 
 % dereferencing from struct causes errors w/ intersect, union / WTF?
 % so unpack here...
-validBits = [1; 2; 3; 4; 6]; 
-triggerBit = 6; 
-keyPosition = {'right', 'top', 'left', 'bottom', 't'};
-keyColour = {'red', 'yellow', 'green', 'blue', 't'};
+validBits = 1:11; 
+triggerBit = 11; % new pin for TTL pulse w/ 10 button ResponsePIXX
+% keyPosition = {'right', 'top', 'left', 'bottom', 't'};
+keyPosition = {'little', 'ring', 'middle', 'index','thumb', ...
+                'thumb', 'index', 'middle', 'ring', 'little', ...
+                't'};
+keyColour = {'blue', 'green', 'yellow', 'red','white', ...
+             'white', 'red', 'yellow', 'green', 'blue', ...
+                't'};
 
 if nargin < 2 || isempty(debugMode)
     debugMode = false;

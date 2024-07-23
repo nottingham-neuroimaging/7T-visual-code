@@ -20,7 +20,7 @@ fprintf('(test) hit Q or Escape to quit this demo\n');
 while ~KbCheck
 
     % use the function that also gets trigger
-    o = getDigIOSPMIC();
+    o = getDigIOSPMIC([],true);
 
     % if that function returns something, display
     if ~isempty(o)
