@@ -67,7 +67,9 @@ Syncing stimulus timing with data acquisition on the scanner is a crucial aspect
 
 The `ResponsePixx` blocks that are part of our setup allow for really precise timing at or better than the frame rate of display.
 
-**The BNC connector that sends the trigger from the scanner should go into pin 5 (`Din05`) on the `ResponsePixx` input box.
+**The BNC connector that sends the trigger from the scanner should go into pin 10 (`Din10`) on the `ResponsePixx` input box.**
+
+This is to make sure that there is no clash with the 10 possible inputs (from `Din00` to `Din09` for the two-paddle response box).
 
 - Here are [some details (and code examples)](./octave-triggering.md) of how to get the scanner trigger and button presses via `octave/Psychtoolbox`
 - To trigger your `PsychoPy` experiment, looks for details here [to come!]
