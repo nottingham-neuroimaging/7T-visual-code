@@ -18,6 +18,14 @@ Coding on macOS (`x86_64` version of `octave`)
   2. `Windows 11` for running `python` code with `PsychoPy`
 - switching the projector on/off is via software. You can use the `PyUtil` tool under both `ubuntu` and `Windows` partitions or `vputil` command in Terminal.
 
+## Asking a question, raising issues
+
+- For a quick overview, you can watch [this presentation/talk](https://echo360.org.uk/media/86dfcae6-d21f-4bef-8351-99dabf482028/public) on the system. Some things will have moved on a bit, but it provides a good introduction to what's available and what to think about.
+
+- You can find some documentation below and sample code to clone in the associated [the github repo](https://github.com/nottingham-neuroimaging/7T-visual-code).
+
+- If you get stuck or have a problem you can [raise an issue on github repo](https://github.com/nottingham-neuroimaging/7T-visual-code/issues) and also try pinging the [SPMIC Imaging for Neuroscience usergroup](https://teams.microsoft.com/l/channel/19%3Af45ef16dd5af4e9b808ba62cb2f6538c%40thread.skype/Imaging%20for%20Neuroscience?groupId=9b568a79-be78-46dc-be5c-d74bfec144e7&tenantId=67bda7ee-fd80-41ef-ac91-358418290a1e) for some advice and so we know.
+
 ## What does it look like?
 
 The setup is made up of a stack of hardware blocks (PROPixx, ResponsePixx, ...) and there are two displays in the console room. One "mirrors" what the participant sees, the other can be used to keep an eye on the software running your experiments.
