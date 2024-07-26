@@ -6,6 +6,9 @@ visual stim code for the 7T, laptop, VPixx, etc.
 
 Go to the [docs folder](./docs/) which is also published to the github pages.
 
+## Samples of `Psychtoolbox` code and related resources
+
+Go to the [ptb-folder](./ptb-code). Make sure you add `MatlabUtilies` to your path for the code in there to pick up the dependencies.
 
 ### 7T console room  settings + notes
 
